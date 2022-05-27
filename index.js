@@ -67,6 +67,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build'));                               
 });
 
-var port = 8080;
+const post = process.env.PORT || 8080;
 app.listen(port);
 console.log('running on port ' + port);
