@@ -1,9 +1,9 @@
 require('dotenv').config({path: './.env'});
 const MongoClient = require('mongodb').MongoClient;
-const url = `mongodb+srv://badbankadmin:${process.env.password}@cluster0.ibie1.mongodb.net/?retryWrites=true&w=majority`;
+const url = `mongodb+srv://badbankadmin:${process.env.pass}@cluster0.ibie1.mongodb.net/?retryWrites=true&w=majority`;
 let db   = null;
 
-console.log(`${process.env.password}`, 'lol')
+console.log(`${process.env.pass}`, 'lol')
 // connect to mongo
 MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
     console.log(err);
