@@ -24,7 +24,7 @@ function Withdraw(){
   }
 
   return (
-      <Card className="cards"  style={{height:'70%'}}>
+      <Card className="cards"  style={{height:'75%'}}>
       <Card.Body>
         
         <Card.Img variant="top" src={bank} style={{left:'0%', opacity: '10%', position:'absolute'}}/>

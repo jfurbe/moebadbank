@@ -1,6 +1,6 @@
 require('dotenv').config({path: './.env'});
 const MongoClient = require('mongodb').MongoClient;
-const url = `mongodb+srv://badbankadmin:${process.env.pass}@cluster0.ibie1.mongodb.net/?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${process.env.user}:${process.env.pass}@cluster0.ibie1.mongodb.net/?retryWrites=true&w=majority`;
 let db   = null;
 
 
@@ -23,6 +23,17 @@ function create(name, email, password) {
     });
   })
 }
+
+// create user auth
+function create(name, auth) {
+    return new Promise((resolve, reject) => {
+      const collection = db.collection('auth');
+      const doc = {name, auth};
+      collection.insertOne(doc, {w:1}, function(err, result) {
+        err ? reject(err) : resolve(doc);
+      });
+    })
+  }
 
 // find user account 
 function find(email) {

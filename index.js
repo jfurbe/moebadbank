@@ -3,6 +3,8 @@ var app = express();
 var cors = require("cors");
 const path = require('path');
 var dal = require('./dal');
+var shajs = require('sha.js')
+var auth = require('./auth');
 
 //used to serve static files from public
 app.use(express.static(path.resolve(__dirname, './client/build')));
@@ -10,8 +12,10 @@ app.use(cors());
 
 
 // create user account
-app.get('/account/create/:name/:email/:password', function(req, res) {
+app.get('/account/create/:name/:email/:password/', function(req, res) {
   console.log(req.params.name);
+
+  let userProf ='';
   dal.findOne(req.params.email).
     then((user)=> {
     if(user){
@@ -20,6 +24,7 @@ app.get('/account/create/:name/:email/:password', function(req, res) {
       dal.create(req.params.name, req.params.email, req.params.password).
       then((user)=> {
         console.log(user);
+        userProf = JSON.stringify(user);
         res.send(user);
       });
     }
@@ -28,6 +33,7 @@ app.get('/account/create/:name/:email/:password', function(req, res) {
 // find User 
 app.get('/account/find/:email/', function(req, res) {
   console.log(req.params.email)
+  console.log(req);
   dal.findOne(req.params.email).
     then((user)=> {
       console.log(user);
@@ -36,7 +42,7 @@ app.get('/account/find/:email/', function(req, res) {
 });
 
 //Update User
-app.get('/account/update/:email/:amount', function (req,res) {
+app.get('/account/update/:email/:amount/', function (req,res) {
   dal.update(req.params.email, parseInt(req.params.amount)).
   then((user)=>
   console.log(user, 'updated successfully'))
@@ -56,6 +62,18 @@ app.get('/account/login/:email/:password', function(req, res) {
 
 // get all
 app.get('/account/all', (req, res)=> {
+  const idToken = req.headers.authorization;
+  if (!idToken) {
+    res.status(401).send();
+    return
+  } 
+  auth.getAuth()
+  .then(key=> {console.log(key)
+    if(key.badbank != idToken){
+      res.status(401).send();
+    }
+  })
+  console.log('auth passed');
   dal.all().
   then((docs)=> {
     console.log(docs);
