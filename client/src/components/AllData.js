@@ -11,7 +11,7 @@ function AllData() {
     fetch('./account/all', {
       method: 'GET',
       headers:{
-        'Authorization': authCode
+        'Authorization': authCode()
       }
     })
       .then(response => response.json())
