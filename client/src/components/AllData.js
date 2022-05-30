@@ -1,13 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {Table, Card} from 'react-bootstrap';
 import bank from '../resources/bank.png';
+import authCode from './clientAuth';
 
 function AllData() {
   const [data, setData] = useState('');
-
+  console.log(authCode);
   useEffect(()=> {
     // fetch all accounts 
-    fetch('./account/all')
+    fetch('./account/all', {
+      method: 'GET',
+      headers:{
+        'Authorization': authCode
+      }
+    })
       .then(response => response.json())
       .then((data)=> {
         console.log(data);

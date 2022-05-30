@@ -62,6 +62,7 @@ app.get('/account/login/:email/:password', function(req, res) {
 // get all
 app.get('/account/all', (req, res)=> {
   const idToken = req.headers.authorization;
+  console.log(idToken);
   if (!idToken) {
     res.status(401).send();
     return
