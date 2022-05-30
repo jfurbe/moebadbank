@@ -3,7 +3,6 @@ var app = express();
 var cors = require("cors");
 const path = require('path');
 var dal = require('./dal');
-var shajs = require('sha.js')
 var auth = require('./auth');
 
 //used to serve static files from public
