@@ -5,7 +5,6 @@ import authCode from './clientAuth';
 
 function AllData() {
   const [data, setData] = useState('');
-  console.log(authCode);
   useEffect(()=> {
     // fetch all accounts 
     fetch('./account/all', {
