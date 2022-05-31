@@ -13,6 +13,19 @@ app.use(cors());
 // create user account
 app.get('/account/create/:name/:email/:password/', function(req, res) {
   console.log(req.params.name);
+  const idToken = req.headers.authorization;
+  console.log(idToken);
+  if (!idToken) {
+    res.status(401).send();
+    return
+  } 
+  auth.getAuth()
+  .then(key=> {
+    if(key.badbank != idToken){
+      res.status(401).send();
+    }
+  })
+  console.log('auth passed');
 
   let userProf ='';
   dal.findOne(req.params.email).
@@ -42,6 +55,19 @@ app.get('/account/find/:email/', function(req, res) {
 
 //Update User
 app.get('/account/update/:email/:amount/', function (req,res) {
+  const idToken = req.headers.authorization;
+  console.log(idToken);
+  if (!idToken) {
+    res.status(401).send();
+    return
+  } 
+  auth.getAuth()
+  .then(key=> {
+    if(key.badbank != idToken){
+      res.status(401).send();
+    }
+  })
+  console.log('auth passed');
   dal.update(req.params.email, parseInt(req.params.amount)).
   then((user)=>
   console.log(user, 'updated successfully'))
@@ -68,7 +94,7 @@ app.get('/account/all', (req, res)=> {
     return
   } 
   auth.getAuth()
-  .then(key=> {console.log(key)
+  .then(key=> {
     if(key.badbank != idToken){
       res.status(401).send();
     }
