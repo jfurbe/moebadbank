@@ -3,6 +3,7 @@ import {Accordion} from 'react-bootstrap'
 import {UserContext} from './context';
 import {useNavigate} from 'react-router-dom';
 import LoginForm from './LoginForm';
+import authCode from './clientAuth';
 
 function Login(){
   const [cntx, setCntx] = useContext(UserContext);
@@ -15,7 +16,12 @@ function Login(){
   function checkDataBase(user, email, password){
 
     if(!user.includes('@')){
-      fetch(`/account/create/${user}/${email}/${password}`)
+      fetch(`/account/create/${user}/${email}/${password}`, {
+        method: 'GET',
+        headers:{
+          'Authorization': authCode()
+        }
+      })
       .then(response => response.text())
       .then(text => {
           try { //Success

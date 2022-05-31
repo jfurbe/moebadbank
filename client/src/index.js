@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter} from 'react-router-dom';
-
+import {authCode} from './clientAuth';
 
 import './index.css';
 import App from './components/App';
@@ -9,7 +9,12 @@ import {UserContext} from './components/context';
 
 
 function updateUserDB(user, amount){
-  fetch(`/account/update/${user}/${amount}/`)
+  fetch(`/account/update/${user}/${amount}/`, {
+    method: 'GET',
+    headers:{
+      'Authorization': authCode()
+    }
+  })
       .then(response => response.text())
       .then(text => {
           try { //Success
