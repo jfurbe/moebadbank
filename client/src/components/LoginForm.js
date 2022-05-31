@@ -33,11 +33,11 @@ function LoginForm({checkDataBase, login}){
   <Button variant="primary" type="submit">
     Submit
   </Button>
-  <div className="pt-2">
+ {/* <div className="pt-2">
   <Button variant="secondary" onClick={(e, goog='goog')=> handleLogin(e, goog)}>
     Sign in with Google
   </Button>
-  </div>
+</div>*/}
 </Form>
 )};
 
