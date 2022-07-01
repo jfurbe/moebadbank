@@ -88,28 +88,29 @@ app.get('/account/login/:email/:password', function(req, res) {
 // get all
 app.get('/account/all', (req, res)=> {
   const idToken = req.headers.authorization;
-  console.log(idToken);
+  
   if (!idToken) {
     res.status(401).send();
     return
-  } 
+  }
+
   auth.getAuth()
   .then(key=> {
     if(key.badbank != idToken){
+      console.log('this', key.badbank)
       res.status(401).send();
     }
   })
   console.log('auth passed');
   dal.all().
   then((docs)=> {
-    console.log(docs);
     res.send(docs);
   });
 });
 
-app.get('*', (req, res) => {                       
+/*app.get('*', (req, res) => {                       
   res.sendFile(path.resolve(__dirname, '../build'));                               
-});
+});*/
 
 var port = process.env.PORT || 8080;
 app.listen(port);

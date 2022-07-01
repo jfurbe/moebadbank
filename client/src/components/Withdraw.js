@@ -12,7 +12,7 @@ function Withdraw(){
     e.preventDefault();
     console.log(e)
     let value = parseInt(e.target[0].value);
-    if(value > 0) {
+    if(cntx.user.balance - value > 0) {
       value = cntx.user.balance - value;
       let userUpdate = {...cntx.user, balance: value}
       setCntx((old)=> ({...old, user: userUpdate}));

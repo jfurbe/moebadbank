@@ -6,8 +6,8 @@ let db   = null;
 
 // connect to mongo
 MongoClient.connect(url, { useUnifiedTopology: true }, function (err, client) {
-    console.log(err);
-    console.log("Connected successfully to db server");
+    console.log('Connection 2' , err);
+    console.log("Connected successfully to Auth server");
 
     // connect to myproject database
     db = client.db('Auth');
@@ -20,7 +20,7 @@ function getAuth(auth) {
           .collection('Servers')
           .findOne({ server: 'badbank' })
           .then((doc) => {
-            console.log(doc)
+           // console.log(doc)
             resolve(doc);
           })
           .catch((err) => reject(err));
